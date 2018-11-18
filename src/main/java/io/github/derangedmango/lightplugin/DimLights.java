@@ -344,6 +344,32 @@ public class DimLights extends BukkitRunnable {
 			}
 			
 			return new int[] {44379,71};
+		} else if(domBlock.equalsIgnoreCase("WHITE_WOOL")) {
+			return new int[] {41200,96};
+		} else if(domBlock.equalsIgnoreCase("ORANGE_WOOL")) {
+			return new int[] {7206,254};
+		} else if(domBlock.equalsIgnoreCase("MAGENTA_WOOL")) {
+			return new int[] {50685,223};
+		} else if(domBlock.equalsIgnoreCase("LIGHT_BLUE_WOOL")) {
+			return new int[] {42733,223};
+		} else if(domBlock.equalsIgnoreCase("YELLOW_WOOL")) {
+			return new int[] {10782,254};
+		} else if(domBlock.equalsIgnoreCase("LIME_WOOL")) {
+			return new int[] {16993,246};
+		} else if(domBlock.equalsIgnoreCase("PINK_WOOL")) {
+			return new int[] {53899,149};
+		} else if(domBlock.equalsIgnoreCase("CYAN_WOOL")) {
+			return new int[] {41385,233};
+		} else if(domBlock.equalsIgnoreCase("PURPLE_WOOL")) {
+			return new int[] {47509,214};
+		} else if(domBlock.equalsIgnoreCase("BLUE_WOOL")) {
+			return new int[] {46014,254};
+		} else if(domBlock.equalsIgnoreCase("BROWN_WOOL")) {
+			return new int[] {6514,254};
+		} else if(domBlock.equalsIgnoreCase("GREEN_WOOL")) {
+			return new int[] {20252,202};
+		} else if(domBlock.equalsIgnoreCase("RED_WOOL")) {
+			return new int[] {452,203};
 		} else {
 			return new int[] {44379,71};
 		}
