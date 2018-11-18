@@ -1,0 +1,15 @@
+name: LightPlugin
+main: io.github.derangedmango.lightplugin.LightPlugin
+version: 0.0.1
+author: DerangedMango
+commands:
+  registerLightIP:
+    description: Adds your smart light's IP to the plugin.
+    usage: /registerLightIP [IP Address]
+    permission: LightPlugin.registerLightIP
+    permission-message: You don't have permission to use this command.
+  deregisterLightIP:
+    description: Removes your smart light's IP from the plugin.
+    usage: /deregisterLightIP
+    permission: LightPlugin.deregisterLightIP
+    permission-message: You don't have permission to use this command.
