@@ -12,18 +12,28 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 
 public class EventListener implements Listener {
 	private final LightPlugin plugin;
+	private final int runRate;
+	private final int colorRate;
+	private final int normalRate;
+	private final BlockConfig[] blockConfigArr;
+	private final int[] alphaArr;
 	private TaskList list;
 
-    public EventListener(LightPlugin plugin, TaskList list) {
+    public EventListener(LightPlugin plugin, TaskList list, int r, int c, int n, BlockConfig[] bc, int[] a) {
         this.plugin = plugin;
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
         this.list = list;
+        runRate = Math.max(r, 2);
+        colorRate = c;
+        normalRate = n;
+        blockConfigArr = bc;
+        alphaArr = a;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-    	DimLights task = new DimLights(plugin, event.getPlayer());
-    	task.runTaskTimer(plugin, 0, 4);
+    	DimLights task = new DimLights(plugin, event.getPlayer(), colorRate, normalRate, blockConfigArr, alphaArr);
+    	task.runTaskTimer(plugin, 0, runRate);
         list.add(task);
     }
     
