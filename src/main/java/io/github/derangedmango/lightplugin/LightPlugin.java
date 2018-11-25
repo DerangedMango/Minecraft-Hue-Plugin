@@ -57,10 +57,7 @@ public class LightPlugin extends JavaPlugin {
 					int currChar = line.toUpperCase().charAt(0);
 					currChar -= 65;
 
-					if(currChar != lastChar) {
-						alphaArr[currChar] = index;
-						// System.out.println(index);
-					}
+					if(currChar != lastChar) alphaArr[currChar] = index;
 
 					blockConfigArr[index++] = new BlockConfig(name, biome, hue, sat);
 					lastChar = currChar;
