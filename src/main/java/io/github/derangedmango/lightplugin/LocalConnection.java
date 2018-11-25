@@ -225,9 +225,9 @@ public class LocalConnection {
 				
 				if(line.substring(0, line.indexOf(":")).equalsIgnoreCase(player.getName())) {
 					match = true;
-					outString = outString + line.substring(0, line.indexOf("$")) + username + ",";
+					outString = outString + line.substring(0, line.indexOf("$")) + username + "~";
 				} else {
-					outString = outString + line + ",";
+					outString = outString + line + "~";
 				}
 			}
 			
@@ -244,7 +244,7 @@ public class LocalConnection {
 				String seg = "";
 				
 				for(int x = 0; x < outString.length(); x++) {
-					if(String.valueOf(outString.charAt(x)).equals(",")) {
+					if(String.valueOf(outString.charAt(x)).equals("~")) {
 						out.println(seg);
 						seg = "";
 					} else {

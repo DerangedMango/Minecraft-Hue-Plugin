@@ -156,10 +156,10 @@ public class DimLights extends BukkitRunnable {
 				if(line.substring(0, line.indexOf(":")).equalsIgnoreCase(name)) {
 					match = true;
 					
-					String[] arr = line.split(":");
-					result[0] = arr[1];
-					result[1] = arr[2];
-					result[2] = arr[3];
+					String[] arr = line.substring(line.indexOf(":") + 1).split(",");
+					result[0] = arr[0];
+					result[1] = arr[1];
+					result[2] = arr[2];
 				}
 			}
 			
@@ -284,6 +284,6 @@ public class DimLights extends BukkitRunnable {
     	}
 
     	// plugin.getLogger().info("No config set up for this block");
-    	return new int[] {44379,71};
+    	return new int[] {44379, 71};
     }
 }

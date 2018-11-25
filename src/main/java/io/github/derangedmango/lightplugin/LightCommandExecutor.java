@@ -107,7 +107,7 @@ public class LightCommandExecutor implements CommandExecutor {
 				BufferedWriter bw = new BufferedWriter(fw);
 			    PrintWriter out = new PrintWriter(bw)) {
 			
-			    out.println(name + ":" + ip + ":" + group + ":$");
+			    out.println(name + ":" + ip + "," + group + ",$");
 			    
 			    return true;
 			} catch (IOException e) {
@@ -132,7 +132,7 @@ public class LightCommandExecutor implements CommandExecutor {
 				if(line.substring(0, line.indexOf(":")).equalsIgnoreCase(name)) {
 					match = true;
 				} else {
-					outString = outString + line + ",";
+					outString = outString + line + "~";
 				}
 			}
 			
@@ -152,7 +152,7 @@ public class LightCommandExecutor implements CommandExecutor {
 				String seg = "";
 				
 				for(int x = 0; x < outString.length(); x++) {
-					if(String.valueOf(outString.charAt(x)).equals(",")) {
+					if(String.valueOf(outString.charAt(x)).equals("~")) {
 						out.println(seg);
 						seg = "";
 					} else {
