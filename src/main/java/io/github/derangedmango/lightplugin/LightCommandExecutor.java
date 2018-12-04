@@ -24,8 +24,8 @@ public class LightCommandExecutor implements CommandExecutor {
 		this.plugin = plugin;
 		this.list = list;
         runRate = Math.max(r, 2);
-        colorRate = c;
-        normalRate = n;
+        colorRate = Math.max(c, 0);
+        normalRate = Math.max(n, 0);
         blockConfigArr = bc;
         alphaArr = a;
 	}
