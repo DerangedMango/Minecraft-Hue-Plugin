@@ -13,11 +13,21 @@ import net.md_5.bungee.api.ChatColor;
 
 public class LightCommandExecutor implements CommandExecutor {
 	private final LightPlugin plugin;
+	private final int runRate;
+	private final int colorRate;
+	private final int normalRate;
+	private final BlockConfig[] blockConfigArr;
+	private final int[] alphaArr;
 	private TaskList list;
 
-	public LightCommandExecutor(LightPlugin plugin, TaskList list) {
+	public LightCommandExecutor(LightPlugin plugin, TaskList list, int r, int c, int n, BlockConfig[] bc, int[] a) {
 		this.plugin = plugin;
 		this.list = list;
+        runRate = Math.max(r, 2);
+        colorRate = Math.max(c, 0);
+        normalRate = Math.max(n, 0);
+        blockConfigArr = bc;
+        alphaArr = a;
 	}
 
 	@Override
@@ -32,9 +42,9 @@ public class LightCommandExecutor implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "Error: Your username already has a registered IP.");
 						return false;
 					} else {
-						DimLights task = new DimLights(plugin, plugin.getServer().getPlayer(sender.getName()));
+						DimLights task = new DimLights(plugin, plugin.getServer().getPlayer(sender.getName()), colorRate, normalRate, blockConfigArr, alphaArr);
 
-						task.runTaskTimer(plugin, 0, 4);
+						task.runTaskTimer(plugin, 0, runRate);
 				        list.add(task);
 						
 						return true;
@@ -50,9 +60,9 @@ public class LightCommandExecutor implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED + "Error: Your username already has a registered IP.");
 						return false;
 					} else {
-						DimLights task = new DimLights(plugin, plugin.getServer().getPlayer(sender.getName()));
+						DimLights task = new DimLights(plugin, plugin.getServer().getPlayer(sender.getName()), colorRate, normalRate, blockConfigArr, alphaArr);
 
-						task.runTaskTimer(plugin, 0, 4);
+						task.runTaskTimer(plugin, 0, runRate);
 				        list.add(task);
 						
 						return true;
@@ -97,7 +107,7 @@ public class LightCommandExecutor implements CommandExecutor {
 				BufferedWriter bw = new BufferedWriter(fw);
 			    PrintWriter out = new PrintWriter(bw)) {
 			
-			    out.println(name + ":" + ip + ":" + group + ":$");
+			    out.println(name + ":" + ip + "," + group + ",$");
 			    
 			    return true;
 			} catch (IOException e) {
@@ -122,7 +132,7 @@ public class LightCommandExecutor implements CommandExecutor {
 				if(line.substring(0, line.indexOf(":")).equalsIgnoreCase(name)) {
 					match = true;
 				} else {
-					outString = outString + line + ",";
+					outString = outString + line + "~";
 				}
 			}
 			
@@ -142,7 +152,7 @@ public class LightCommandExecutor implements CommandExecutor {
 				String seg = "";
 				
 				for(int x = 0; x < outString.length(); x++) {
-					if(String.valueOf(outString.charAt(x)).equals(",")) {
+					if(String.valueOf(outString.charAt(x)).equals("~")) {
 						out.println(seg);
 						seg = "";
 					} else {

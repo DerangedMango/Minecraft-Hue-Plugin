@@ -26,8 +26,10 @@ public class DimLights extends BukkitRunnable {
 	private String[] conInfo;
 	private boolean inTheEnd;
 	private int buttonPromptCounter;
+	private BlockConfig[] blockConfigArr;
+	private int[] alphaArr;
 
-    public DimLights(JavaPlugin plugin, Player player) {
+    public DimLights(JavaPlugin plugin, Player player, int c, int n, BlockConfig[] bc, int[] a) {
         this.plugin = plugin;
         this.player = player;
         con = null;
@@ -36,10 +38,12 @@ public class DimLights extends BukkitRunnable {
         lastSat = -1;
         paused = false;
         conInfo = null;
-        normalRate = 3;
-        colorRate = 7;
+        normalRate = n;
+        colorRate = c;
         inTheEnd = false;
         buttonPromptCounter = 0;
+        blockConfigArr = bc;
+        alphaArr = a;
     }
 
     @Override
@@ -152,10 +156,10 @@ public class DimLights extends BukkitRunnable {
 				if(line.substring(0, line.indexOf(":")).equalsIgnoreCase(name)) {
 					match = true;
 					
-					String[] arr = line.split(":");
-					result[0] = arr[1];
-					result[1] = arr[2];
-					result[2] = arr[3];
+					String[] arr = line.substring(line.indexOf(":") + 1).split(",");
+					result[0] = arr[0];
+					result[1] = arr[1];
+					result[2] = arr[2];
 				}
 			}
 			
@@ -224,7 +228,7 @@ public class DimLights extends BukkitRunnable {
 		}
 
 		int currMax = 0;
-		String domBlock = "";
+		String domBlock = "VOID";
 
 		for(int i = 0; i <= lastIndex; i++) {
 			// plugin.getLogger().info("NAME: " + blockTypes[i] + ", COUNT: " + blockCounts[i]);
@@ -262,116 +266,24 @@ public class DimLights extends BukkitRunnable {
     }
     
     private int[] getColorFromBlock(String domBlock, String[] blockTypes, int[] blockCounts, int lastIndex) {
-    	if(domBlock.equalsIgnoreCase("GRASS")) {
-			for(int i = 0; i <= lastIndex; i++) {
-				if(blockTypes[i].equalsIgnoreCase("SNOW") && blockCounts[i] >= 10) {
-					return new int[] {41513,108};
-				}
-			}
-			
-			Biome biome = player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-			// plugin.getLogger().info("biome name: " + biome.name());
-			
-			if(biome.name().contains("EXTREME_HILLS")) {
-				return new int[] {35017,124};
-			} else if(biome.name().equalsIgnoreCase("ROOFED_FOREST")) {
-				return new int[] {26986,103};
-			} else if(biome.name().equalsIgnoreCase("TAIGA_HILLS")) {
-				return new int[] {37580,149};
-			} else if(biome.name().equalsIgnoreCase("SWAMPLAND")) {
-				return new int[] {15762,253};
-			} else if(biome.name().contains("JUNGLE")) {
-				return new int[] {26191,164};
-			} else if(biome.name().contains("BADLANDS") || biome.name().contains("MESA")) {
-				return new int[] {33664,32};
-			}
-			
-			return new int[] {30539,85};
-		} else if(domBlock.equalsIgnoreCase("WATER")) {
-			return new int[] {45016,253};
-		} else if(domBlock.equalsIgnoreCase("DIRT")) {
-			Biome biome = player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-			// plugin.getLogger().info(biome.name());
-			
-			if(biome.name().contains("BADLANDS") || biome.name().contains("MESA")) {
-				return new int[] {558,69};
-			}
-			
-			for(int i = 0; i <= lastIndex; i++) {
-				if(blockTypes[i].equalsIgnoreCase("GRASS")) {
-					if(biome.name().contains("EXTREME_HILLS")) {
-						return new int[] {35017,124};
-					} else if(biome.name().equalsIgnoreCase("ROOFED_FOREST")) {
-						return new int[] {26986,103};
-					} else if(biome.name().equalsIgnoreCase("TAIGA_HILLS")) {
-						return new int[] {37580,149};
-					} else if(biome.name().equalsIgnoreCase("SWAMPLAND")) {
-						return new int[] {15762,253};
-					} else if(biome.name().contains("JUNGLE")) {
-						return new int[] {26191,164};
-					} else if(biome.name().contains("BADLANDS") || biome.name().contains("MESA")) {
-						return new int[] {33664,32};
-					}
-					
-					return new int[] {30539,85};
-				}
-			}
-			
-			return new int[] {5852,154};
-		} else if(domBlock.equalsIgnoreCase("STONE")) {
-			return new int[] {44559,129};
-		} else if(domBlock.equalsIgnoreCase("LAVA")) {
-			return new int[] {2732,217};
-		} else if(domBlock.contains("SAND")) {
-			Biome biome = player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-			// plugin.getLogger().info(biome.name());
-			
-			if(biome.name().contains("BADLANDS") || biome.name().contains("MESA")) {
-				return new int[] {558,69};
-			}
-			
-			return new int[] {43307,33};
-		} else if(domBlock.equalsIgnoreCase("SNOW")) {
-			return new int[] {41513,108};
-		} else if(domBlock.equalsIgnoreCase("MYCEL")) {
-			return new int[] {46711,143};
-		} else if(domBlock.equalsIgnoreCase("STAINED_CLAY") || domBlock.equalsIgnoreCase("HARD_CLAY")) {
-			Biome biome = player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-			// plugin.getLogger().info(biome.name());
-			
-			if(biome.name().contains("BADLANDS") || biome.name().contains("MESA")) {
-				return new int[] {558,69};
-			}
-			
-			return new int[] {44379,71};
-		} else if(domBlock.equalsIgnoreCase("WHITE_WOOL")) {
-			return new int[] {41200,96};
-		} else if(domBlock.equalsIgnoreCase("ORANGE_WOOL")) {
-			return new int[] {7206,254};
-		} else if(domBlock.equalsIgnoreCase("MAGENTA_WOOL")) {
-			return new int[] {50685,223};
-		} else if(domBlock.equalsIgnoreCase("LIGHT_BLUE_WOOL")) {
-			return new int[] {42733,223};
-		} else if(domBlock.equalsIgnoreCase("YELLOW_WOOL")) {
-			return new int[] {10782,254};
-		} else if(domBlock.equalsIgnoreCase("LIME_WOOL")) {
-			return new int[] {16993,246};
-		} else if(domBlock.equalsIgnoreCase("PINK_WOOL")) {
-			return new int[] {53899,149};
-		} else if(domBlock.equalsIgnoreCase("CYAN_WOOL")) {
-			return new int[] {41385,233};
-		} else if(domBlock.equalsIgnoreCase("PURPLE_WOOL")) {
-			return new int[] {47509,214};
-		} else if(domBlock.equalsIgnoreCase("BLUE_WOOL")) {
-			return new int[] {46014,254};
-		} else if(domBlock.equalsIgnoreCase("BROWN_WOOL")) {
-			return new int[] {6514,254};
-		} else if(domBlock.equalsIgnoreCase("GREEN_WOOL")) {
-			return new int[] {20252,202};
-		} else if(domBlock.equalsIgnoreCase("RED_WOOL")) {
-			return new int[] {452,203};
-		} else {
-			return new int[] {44379,71};
-		}
+    	int alphaIndex = domBlock.toUpperCase().charAt(0);
+    	alphaIndex -= 65;
+
+    	Biome biome = player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
+
+    	for(int i = alphaArr[alphaIndex]; i < blockConfigArr.length; i++) {
+    		if(domBlock.equalsIgnoreCase(blockConfigArr[i].getName())) {
+    			if(blockConfigArr[i].getBiome().equalsIgnoreCase(biome.toString())) {
+    				// plugin.getLogger().info("Found perfect match: " + domBlock + ", " + biome.toString());
+    				return new int[] {blockConfigArr[i].getHue(), blockConfigArr[i].getSat()};
+    			} else if(blockConfigArr[i].getBiome().equalsIgnoreCase("DEFAULT")) {
+    				// plugin.getLogger().info("Found default match: " + domBlock + ", default setting");
+    				return new int[] {blockConfigArr[i].getHue(), blockConfigArr[i].getSat()};
+    			}
+    		}
+    	}
+
+    	// plugin.getLogger().info("No config set up for this block");
+    	return new int[] {44379, 71};
     }
 }
