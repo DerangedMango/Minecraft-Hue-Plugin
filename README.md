@@ -1,4 +1,4 @@
-# MC-Lighting
+# Minecraft Hue
 A Minecraft plugin that syncs the game with your Hue smart lights.
 
 
