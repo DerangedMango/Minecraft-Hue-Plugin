@@ -1,15 +1,15 @@
-name: LightPlugin
-main: io.github.derangedmango.lightplugin.LightPlugin
+name: MinecraftHue
+main: io.github.derangedmango.minecrafthueplugin.MinecraftHuePlugin
 version: 1.0
 author: DerangedMango
 commands:
   registerLightIP:
     description: Adds your smart light's IP to the plugin.
     usage: /registerLightIP <Hue Hub Local IP> [Light Group Name]
-    permission: LightPlugin.registerLightIP
+    permission: MinecraftHuePlugin.registerLightIP
     permission-message: You don't have permission to use this command.
   deregisterLightIP:
     description: Removes your smart light's IP from the plugin.
     usage: /deregisterLightIP
-    permission: LightPlugin.deregisterLightIP
+    permission: MinecraftHuePlugin.deregisterLightIP
     permission-message: You don't have permission to use this command.
