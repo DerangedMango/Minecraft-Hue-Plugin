@@ -1,6 +1,6 @@
 name: LightPlugin
 main: io.github.derangedmango.lightplugin.LightPlugin
-version: 0.0.1
+version: 1.0
 author: DerangedMango
 commands:
   registerLightIP:
