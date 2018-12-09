@@ -5,7 +5,7 @@ author: DerangedMango
 commands:
   registerLightIP:
     description: Adds your smart light's IP to the plugin.
-    usage: /registerLightIP [IP Address]
+    usage: /registerLightIP <Hue Hub Local IP> [Light Group Name]
     permission: LightPlugin.registerLightIP
     permission-message: You don't have permission to use this command.
   deregisterLightIP:
