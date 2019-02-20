@@ -65,6 +65,7 @@ public class TaskList {
 	public void cancel(String name) {
 		for(DimLights temp : list) {
 			if(temp.getPlayerName().equals(name)) {
+				temp.deactivateFire();
 				temp.cancel();
 			}
 		}

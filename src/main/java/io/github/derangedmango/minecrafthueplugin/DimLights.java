@@ -25,6 +25,8 @@ public class DimLights extends BukkitRunnable {
 	private boolean paused;
 	private String[] conInfo;
 	private boolean inTheEnd;
+	private boolean nearFire;
+	private FireThread fireThread;
 	private int buttonPromptCounter;
 	private BlockConfig[] blockConfigArr;
 	private int[] alphaArr;
@@ -41,6 +43,8 @@ public class DimLights extends BukkitRunnable {
         normalRate = n;
         colorRate = c;
         inTheEnd = false;
+        nearFire = false;
+        fireThread = null;
         buttonPromptCounter = 0;
         blockConfigArr = bc;
         alphaArr = a;
@@ -86,6 +90,14 @@ public class DimLights extends BukkitRunnable {
     	return conInfo;
     }
     
+    public void deactivateFire() {
+    	if(fireThread != null) {
+    		fireThread.deactivate();
+    		fireThread = null;
+    		lastHue = -1;
+    	}
+    }
+    
     private byte getPlayerLightLevel() {
 		return player.getLocation().getBlock().getLightLevel();
     }
@@ -123,17 +135,25 @@ public class DimLights extends BukkitRunnable {
     			
     			if(inTheEnd) lightLevel = 15;
     			
-    			if(lightLevel != lastLightLevel || color[0] != lastHue || color[1] != lastSat) {
-    				// plugin.getLogger().info("difference found");
-    				if(color[0] != lastHue || color[1] != lastSat) {
-    					con.dim(hueLevels[lightLevel], color[0], color[1], colorRate);
-    				} else {
-    					con.dim(hueLevels[lightLevel], color[0], color[1], normalRate);
+    			if(nearFire) {
+    				if(fireThread == null) {
+    					fireThread = new FireThread(con, true);
+    					fireThread.start();
     				}
+    			} else {
+    				this.deactivateFire();
     				
-    				lastLightLevel = lightLevel;
-    				lastHue = color[0];
-    				lastSat = color[1];
+	    			if(lightLevel != lastLightLevel || color[0] != lastHue || color[1] != lastSat) {
+	    				if(color[0] != lastHue || color[1] != lastSat) {
+	    					con.dim(hueLevels[lightLevel], color[0], color[1], colorRate);
+	    				} else {
+	    					con.dim(hueLevels[lightLevel], color[0], color[1], normalRate);
+	    				}
+	    				
+	    				lastLightLevel = lightLevel;
+	    				lastHue = color[0];
+	    				lastSat = color[1];
+	    			}
     			}
     		} else if(con.toString().equalsIgnoreCase("Invalid IP")) {
     			player.sendMessage(ChatColor.RED + "Error: The IP you registered is not valid.");
@@ -186,10 +206,7 @@ public class DimLights extends BukkitRunnable {
 		String blockName;
 		World world = player.getWorld();
 		
-		if(world.getEnvironment().toString().equalsIgnoreCase("NETHER")) {
-			inTheEnd = false;
-			return new int[] {67,247};
-    	} else if(world.getEnvironment().toString().equalsIgnoreCase("THE_END")) {
+		if(world.getEnvironment().toString().equalsIgnoreCase("THE_END")) {
     		inTheEnd = true;
     		return new int[] {47416,214};
     	} else {
@@ -198,6 +215,13 @@ public class DimLights extends BukkitRunnable {
 					for(int z = pz - 2; z <= pz + 2; z++) {
 						loc = new Location(world, x, y, z);
 						blockName = consolidateBlockNames(loc.getBlock());
+						
+						if(blockName.equalsIgnoreCase("FIRE")) {
+							nearFire = true;
+							return new int[] {3332, 254};
+						}
+						
+						nearFire = false;
 	
 						if(!blockName.equalsIgnoreCase("AIR")) {
 							if(lastIndex > -1) {

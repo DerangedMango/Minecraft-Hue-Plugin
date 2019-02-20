@@ -116,7 +116,7 @@ public class MinecraftHuePlugin extends JavaPlugin {
 					out.println("CYAN_WOOL#DEFAULT:41385,233");
 					out.println("DIRT#BADLANDS:558,69");
 					out.println("DIRT#MESA:558,69");
-					out.println("DIRT#DEFAULT:5763,111");
+					out.println("DIRT#DEFAULT:5224,56");
 					out.println("GRASS#EXTREME_HILLS:35017,124");
 					out.println("GRASS#ROOFED_FOREST:26986,103");
 					out.println("GRASS#TAIGA_HILLS:37580,149");
@@ -134,6 +134,7 @@ public class MinecraftHuePlugin extends JavaPlugin {
 					out.println("LIME_WOOL#DEFAULT:16993,246");
 					out.println("MAGENTA_WOOL#DEFAULT:50685,223");
 					out.println("MYCEL#DEFAULT:46711,143");
+					out.println("NETHERRACK#DEFAULT:65295,254");
 					out.println("ORANGE_WOOL#DEFAULT:6375,254");
 					out.println("PINK_WOOL#DEFAULT:53899,149");
 					out.println("PURPLE_WOOL#DEFAULT:47509,214");
