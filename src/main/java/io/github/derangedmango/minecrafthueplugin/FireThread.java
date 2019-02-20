@@ -16,9 +16,10 @@ public class FireThread extends Thread {
 	
 	public void run() {
 		Random ran = new Random();
-		int[] bris = new int[] {157, 172, 187, 202, 217, 232};
-		int[] hues = new int[] {7278, 7147, 4046, 8669};
-		int[] sats = new int[] {254, 217, 225, 254};
+		int[] breathe = new int[] {157, 172, 187, 202, 217, 232};
+		int[] hues = new int[] {7278, 7147, 4046, 8669, 5090};
+		int[] sats = new int[] {254, 217, 225, 254, 215};
+		int[] bris = new int[] {247, 247, 247, 247, 148};
 		int i = -1;
 		
 		while(active) {
@@ -41,24 +42,24 @@ public class FireThread extends Thread {
 			}
 			
 			
-			for(int j = bris.length-1; j >= 0; j--) {
+			for(int j = breathe.length-1; j >= 0; j--) {
 				i = ran.nextInt(100);
 				
 				if(i < 15) {
-					i = ran.nextInt(3);
+					i = ran.nextInt(hues.length);
 					
 					if(active) {
-						con.dim(247, hues[i], sats[i], 1);
+						con.dim(bris[i], hues[i], sats[i], 1);
 						
 						try {
-							TimeUnit.MILLISECONDS.sleep(Long.valueOf(80));
+							TimeUnit.MILLISECONDS.sleep(Long.valueOf(90));
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
 				}
 				
-				if(active) con.dim(bris[j], 5349, 254, 3);
+				if(active) con.dim(breathe[j], 5349, 254, 3);
 				
 				try {
 					TimeUnit.MILLISECONDS.sleep(Long.valueOf(290));
@@ -67,24 +68,24 @@ public class FireThread extends Thread {
 				}
 			}
 			
-			for(int j = 0; j < bris.length; j++) {
+			for(int j = 0; j < breathe.length; j++) {
 				i = ran.nextInt(100);
 				
 				if(i < 15) {
-					i = ran.nextInt(3);
+					i = ran.nextInt(hues.length);
 					
 					if(active) {
-						con.dim(247, hues[i], sats[i], 1);
+						con.dim(bris[i], hues[i], sats[i], 1);
 						
 						try {
-							TimeUnit.MILLISECONDS.sleep(Long.valueOf(80));
+							TimeUnit.MILLISECONDS.sleep(Long.valueOf(90));
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
 				}
 				
-				if(active) con.dim(bris[j], 5349, 254, 3);
+				if(active) con.dim(breathe[j], 5349, 254, 3);
 				
 				try {
 					TimeUnit.MILLISECONDS.sleep(Long.valueOf(290));
