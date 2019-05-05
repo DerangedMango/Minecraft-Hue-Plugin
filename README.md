@@ -17,7 +17,7 @@ The plugin adds two commands:
 You can find the local IP of your Hue Bridge/Hub easily using their mobile app. You do not need to provide a light group, but the plugin will connect to all of your Hue lights by default if you don’t. The group name can have spaces but it currently only accepts one group.
 
 ## Download
-The plugin jar file can be downloaded [here](http://www.mediafire.com/file/i4ecggqyk27u2m6/minecraft-hue-1.0.0.jar/file).  
+The plugin jar file can be downloaded [here](https://github.com/DerangedMango/Minecraft-Hue-Plugin/releases).  
 Don't know how to install a plugin file? Follow these [instructions](https://bukkit.gamepedia.com/Installing_Plugins).
 
 ## Donate
